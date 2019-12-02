@@ -97,6 +97,7 @@ h1, h2{
     font-family: 'Fredericka the Great', cursive;
     line-height: 2.3em;
     font-size: 2.5em;
+    opacity: 0.1;
     transition: all 0.2s ease-in;
 }
 
@@ -106,5 +107,6 @@ h1, h2{
 
 .day-container.opened p.word-of-the-day{
     background-color: var(--day-box-color);
+    opacity: 1;
     color: #0c0c0c;
 }
