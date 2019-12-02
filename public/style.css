@@ -1,0 +1,109 @@
+:root{
+    --day-box-height: 6em;
+    /*--day-box-color: #7787a9;*/
+    --day-box-color: #e7e7be;
+}
+
+body,html,h2,p{
+    margin:0;
+    padding:0;
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+body{
+    background-color:#000;
+    background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 20px),
+                    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 15px),
+                    radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 20px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+    height: 100vh;
+}
+
+h1{
+    margin-top: 0;
+    color:#e7e7be;
+}
+
+h1, h2{
+    font-family: 'Pacifico', cursive;
+    font-weight: normal;
+}
+
+#cal-container{
+    max-width: 35em;
+    margin: 0 auto;
+    padding: 2em;
+}
+
+#cal-container #cal-title{
+    text-align: center;
+}
+
+#adv-cal{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#adv-cal .day-container{
+    min-width: var(--day-box-height);
+    height: var(--day-box-height);
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--day-box-color);
+    background-color:  #545433;
+    margin: 1em;
+}
+
+#adv-cal .day-container,
+.day-container .day-header,
+.day-container .word-of-the-day{
+    border-radius: 5px;
+}
+
+.day-container .day-header,
+.day-container .word-of-the-day{
+    height: var(--day-box-height);
+    width: 100%;
+    cursor: -webkit-grab; cursor: grab;
+}
+
+.day-container .day-header{
+    position: absolute;
+    /*background-color: teal;*/
+    top: 0em;
+    transition: all 0.3s ease-out;
+    background-color: rgba(255, 255, 255, .15);  
+    backdrop-filter: blur(5px);
+}
+
+.day-container .day-header span{
+    font-size: 3em;
+    color:#000600;
+    text-shadow: 1px 1px #fffde4;
+}
+
+.day-container.opened .day-header{
+    top:calc(0em - var(--day-box-height));
+}
+
+.day-container p.word-of-the-day{
+    color: var(--day-box-color);
+    font-family: 'Fredericka the Great', cursive;
+    line-height: 2.3em;
+    font-size: 2.5em;
+    transition: all 0.2s ease-in;
+}
+
+.day-container p.word-of-the-day span{
+    padding: 0.3em;
+}
+
+.day-container.opened p.word-of-the-day{
+    background-color: var(--day-box-color);
+    color: #0c0c0c;
+}

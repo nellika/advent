@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Pacifico&display=swap&subset=cyrillic,cyrillic-ext,latin-ext,vietnamese" rel="stylesheet">
+    <title>Adventi naptár</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <main id='cal-container'>
+        <h1 id="cal-title">Adventi kalendárium</h1>
+        <section id="adv-cal">
+            <article @click="toggleOpened" v-for='(word, index) in words' class="day-container">
+                <h2 class="day-header"><span>{{index + 1}}</span></h2>
+                <p class="word-of-the-day"><span>{{word}}</span></p>
+            </article>
+        </section>
+    </main>
+<script>
+    const app = new Vue({
+        el: '#adv-cal',
+        data: {
+            words: ['cat', 'pig']
+        },
+        created(){
+            fetch('/api/words')
+                .then(response => response.json())
+                .then(json => {
+                    this.words = json
+                })
+        },
+        methods: {
+            toggleOpened: function(e){
+                let elChild;
+    
+                if(e.target.tagName.toUpperCase() == 'SPAN'){
+                    elChild = e.path[2];        
+                } else {
+                    elChild = e.path[1];
+                }
+                
+                elChild.classList.toggle('opened'); 
+            }
+        }
+    })
+</script>
+</body>
+</html>

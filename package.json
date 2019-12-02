@@ -1,0 +1,10 @@
+{
+ "name": "adv-cal",
+ "main": "server.js",
+ "dependencies": {
+  "koa": "^2.11.0",
+  "koa-router": "^7.4.0",
+  "koa-send": "^5.0.0",
+  "koa-static": "^2.0.0"
+ }
+}
