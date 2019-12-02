@@ -61,8 +61,8 @@ app.use(router.allowedMethods());
 
 // this last middleware catches any request that isn't handled by
 // koa-static or koa-router, ie your index.html in your example
-app.use(function* index() {
-  yield send(this, __dirname + '/index.html');
-});
+//app.use(function* index() {
+//  yield send(this, __dirname + '/index.html');
+//});
 
-app.listen(4000);
+app.listen(process.env.PORT || 5000);
