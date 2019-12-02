@@ -69,7 +69,7 @@ h1, h2{
 .day-container .word-of-the-day{
     height: var(--day-box-height);
     width: 100%;
-    cursor: -webkit-grab; cursor: grab;
+    cursor: pointer;
 }
 
 .day-container .day-header{
