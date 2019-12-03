@@ -13,11 +13,20 @@
     <main id='cal-container'>
         <h1 id="cal-title">Adventi kalendárium</h1>
         <section id="adv-cal">
-            <article @click="toggleOpened" v-for='(word, index) in words' class="day-container">
+            <article @click="toggleOpened" v-for='(word, index) in words' v-bind:class="[index == words.length-1 ? 'word-of-today day-container' : 'day-container']">
                 <h2 class="day-header no-highlight">
-                    <span>{{index + 1}}</span><img v-bind:src="getDecorImg(index)" class="decoration">
+                    <span>{{index + 1}}</span>
+                    <img v-bind:src="getDecorImg(index)" class="decoration">
                 </h2>
                 <p class="word-of-the-day no-highlight"><span>{{word}}</span></p>
+            </article>
+            <article @click="toggleOpened" class="day-container no-word" v-if="words.length != 24">
+                <h2 class="day-header no-highlight">
+                    <span>{{words.length + 1}}</span>
+                </h2>
+                <p class="word-of-the-day no-highlight">
+                    <img id="loading-gif" src="decor/loading.gif" alt="Christmas is loading">
+                </p>
             </article>
         </section>
     </main>

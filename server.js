@@ -50,9 +50,15 @@ app.use(serve(__dirname + '/public'));
 router.get('/api/words', async function (ctx){
     // You can use `await` in here
     let nrOfDays = getNrOfDaysInDec();
-    let resp = words.slice(0,24);
+    let resp = words.slice(0,nrOfDays);
 
     ctx.body = resp;
+});
+
+router.get('/*', async function (ctx){
+    ctx.body = '<div style="text-align: center;font-size: 20px;">' +
+                '<p style="margin: 2em 0 0 0;font-family: monospace;">Present not found :(</p>'+
+                '<img src="../decor/not-found.gif" alt="Page not found"></div>';
 });
 
 app.use(router.routes());

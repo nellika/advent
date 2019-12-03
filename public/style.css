@@ -2,6 +2,8 @@
     --day-box-height: 6em;
     /*--day-box-color: #7787a9;*/
     --day-box-color: #e7e7be;
+    --no-word-grey: #807f80;
+    --todays-green: #b5ffc5;
 }
 
 body,html,h2,p{
@@ -59,6 +61,14 @@ h1, h2{
     margin: 1em;
 }
 
+#adv-cal .day-container.no-word{
+    border: 1px solid var(--no-word-grey);
+}
+
+#adv-cal .day-container.word-of-today{
+    border: 1px solid var(--todays-green);
+}
+
 #adv-cal .day-container,
 .day-container .day-header,
 .day-container .word-of-the-day{
@@ -98,8 +108,26 @@ h1, h2{
     transition: all 0.2s ease-in;
 }
 
+.day-container.no-word p.word-of-the-day #loading-gif{
+    height: 2.7em;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+.day-container.no-word.opened p.word-of-the-day #loading-gif{
+    opacity: 1;
+}
+
 .day-container p.word-of-the-day span{
     padding: 0.3em;
+}
+
+.day-container.no-word .day-header span{
+    color:var(--no-word-grey);
+}
+
+.day-container.word-of-today .day-header span{
+    color:var(--todays-green);
 }
 
 .day-container.opened p.word-of-the-day{
