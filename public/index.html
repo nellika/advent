@@ -14,8 +14,10 @@
         <h1 id="cal-title">Adventi kalendárium</h1>
         <section id="adv-cal">
             <article @click="toggleOpened" v-for='(word, index) in words' class="day-container">
-                <h2 class="day-header"><span>{{index + 1}}</span></h2>
-                <p class="word-of-the-day"><span>{{word}}</span></p>
+                <h2 class="day-header no-highlight">
+                    <span>{{index + 1}}</span><img v-bind:src="getDecorImg(index)" class="decoration">
+                </h2>
+                <p class="word-of-the-day no-highlight"><span>{{word}}</span></p>
             </article>
         </section>
     </main>
@@ -23,7 +25,7 @@
     const app = new Vue({
         el: '#adv-cal',
         data: {
-            words: ['cat', 'pig']
+            words: []
         },
         created(){
             fetch('/api/words')
@@ -43,9 +45,16 @@
                 }
                 
                 elChild.classList.toggle('opened'); 
+            },
+            getDecorImg : function(index) {
+                return `decor${index%2}.svg`;
             }
         }
     })
+
+    function toggleOpenedGeneral(){
+        
+    }
 </script>
 </body>
 </html>
