@@ -15,7 +15,7 @@ let words = ['narancs',
             'tél',
             'karácsony',
             'fa',
-            'szem',
+            'mogyoró',
             'angyal',
             'hó',
             'hópehely',
@@ -35,10 +35,9 @@ let words = ['narancs',
 function getNrOfDaysInDec(){
     let currTime = new Date();
     let tzOffsetUTC = currTime.getTimezoneOffset();
-    let tzOffsetHungary = tzOffsetUTC - 60;
-    let tzOffsetInMs = tzOffsetHungary*60*1000;
+    let tzOffsetInMs = tzOffsetUTC*60*1000;
 
-    let currTimeInHungary = new Date(currTime.getTime() + tzOffsetInMs);
+    let currTimeInHungary = new Date(currTime.getTime() - tzOffsetInMs);
     let nrDaysInDec = currTimeInHungary.getDay() + 1;
 
     return nrDaysInDec;
@@ -51,7 +50,7 @@ app.use(serve(__dirname + '/public'));
 router.get('/api/words', async function (ctx){
     // You can use `await` in here
     let nrOfDays = getNrOfDaysInDec();
-    let resp = words.slice(0,nrOfDays);
+    let resp = words.slice(0,24);
 
     ctx.body = resp;
 });
