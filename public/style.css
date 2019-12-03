@@ -13,10 +13,10 @@ body,html,h2,p{
 
 body{
     background-color:#000;
-    background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 20px),
-                    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
-                    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 15px),
-                    radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 20px);
+    background-image: radial-gradient(white, rgba(255,255,255,.2) 5px, transparent 20px),
+                    radial-gradient(white, rgba(255,255,255,.15) 3px, transparent 30px),
+                    radial-gradient(white, rgba(255,255,255,.1) 4px, transparent 15px),
+                    radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 3px, transparent 20px);
     background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
     background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
     height: 100vh;
@@ -35,7 +35,7 @@ h1, h2{
 #cal-container{
     max-width: 35em;
     margin: 0 auto;
-    padding: 2em;
+    padding: 2em 2em 0 2em;
 }
 
 #cal-container #cal-title{
@@ -55,7 +55,7 @@ h1, h2{
     overflow: hidden;
     position: relative;
     border: 1px solid var(--day-box-color);
-    background-color:  #545433;
+    /*background-color:  #545433;*/
     margin: 1em;
 }
 
@@ -75,14 +75,14 @@ h1, h2{
     position: absolute;
     top: 0em;
     transition: all 0.3s ease-out;
-    background-color: rgba(255, 255, 255, .15);  
+    background-color: rgba(255, 255, 255, .08);  
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
 }
 
 .day-container .day-header span{
     font-size: 4.8em;
-    color:#fff;
+    color:#fffedf;
     font-family: 'Fredericka the Great', cursive;
 }
 
@@ -93,8 +93,8 @@ h1, h2{
 .day-container p.word-of-the-day{
     color: var(--day-box-color);
     font-family: 'Fredericka the Great', cursive;
-    line-height: 2.3em;
-    font-size: 2.5em;
+    line-height: 2.7em;
+    font-size: 2.6em;
     transition: all 0.2s ease-in;
 }
 

@@ -37,24 +37,20 @@
         methods: {
             toggleOpened: function(e){
                 let elChild;
-    
-                if(e.target.tagName.toUpperCase() == 'SPAN'){
-                    elChild = e.path[2];        
+                
+                if(e.target.tagName.toUpperCase() == 'H2'){
+                    elChild = e.path[1];        
                 } else {
-                    elChild = e.path[1];
+                    elChild = e.path[2];
                 }
                 
                 elChild.classList.toggle('opened'); 
             },
             getDecorImg : function(index) {
-                return `decor${index%2}.svg`;
+                return `decor/${index%7}.svg`;
             }
         }
     })
-
-    function toggleOpenedGeneral(){
-        
-    }
 </script>
 </body>
 </html>
