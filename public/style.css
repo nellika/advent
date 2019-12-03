@@ -73,7 +73,6 @@ h1, h2{
 .day-container .day-header,
 .day-container .word-of-the-day{
     border-radius: 5px;
-    cursor: pointer;
 }
 
 .day-container .day-header,
