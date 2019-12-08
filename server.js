@@ -50,7 +50,7 @@ app.use(serve(__dirname + '/public'));
 router.get('/api/words', async function (ctx){
     // You can use `await` in here
     let nrOfDays = getNrOfDaysInDec();
-    let resp = words.slice(0,nrOfDays);
+    let resp = words.slice(0,8);
 
     ctx.body = resp;
 });
