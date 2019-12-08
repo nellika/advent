@@ -38,7 +38,7 @@ function getNrOfDaysInDec(){
     let tzOffsetInMs = tzOffsetUTC*60*1000;
 
     let currTimeInHungary = new Date(currTime.getTime() - tzOffsetInMs);
-    let nrDaysInDec = currTimeInHungary.getDay() + 1;
+    let nrDaysInDec = currTimeInHungary.getUTCDate();
 
     return nrDaysInDec;
 }
@@ -50,7 +50,7 @@ app.use(serve(__dirname + '/public'));
 router.get('/api/words', async function (ctx){
     // You can use `await` in here
     let nrOfDays = getNrOfDaysInDec();
-    let resp = words.slice(0,8);
+    let resp = words.slice(0,nrOfDays);
 
     ctx.body = resp;
 });
