@@ -34,24 +34,13 @@ let words = ['narancs',
 
 function getNrOfDaysInDec(){
     let currTime = new Date();
-    let tzOffsetUTC = currTime.getTimezoneOffset();
-    let tzOffsetInMs = tzOffsetUTC*60*1000;
-
-    let currTimeInHungary = new Date(currTime.getTime() - tzOffsetInMs);
-    let nrDaysInDec = currTimeInHungary.getDate();
-
-    return nrDaysInDec;
-}
-
-function getCurrTimeInHungary(){
-    let currTime = new Date();
     let tzOffsetUTC = -60;
     let tzOffsetInMs = tzOffsetUTC*60*1000;
 
     let currTimeInHungary = new Date(currTime.getTime() - tzOffsetInMs);
     let nrDaysInDec = currTimeInHungary.getDate();
 
-    return currTimeInHungary;
+    return nrDaysInDec;
 }
 
 // serve files in public folder (css, js etc)
@@ -64,25 +53,6 @@ router.get('/api/words', async function (ctx){
     let resp = words.slice(0,nrOfDays);
 
     ctx.body = resp;
-});
-
-router.get('/api/currTimeInHun', async function (ctx){
-    // You can use `await` in here
-    let currTimeHun = getCurrTimeInHungary();
-    ctx.body = currTimeHun;
-});
-
-router.get('/api/tzOffsetUTC', async function (ctx){
-    // You can use `await` in here
-    let currTime = new Date();
-    let tzOffsetUTC = currTime.getTimezoneOffset();
-    ctx.body = tzOffsetUTC;
-});
-
-router.get('/api/currTime', async function (ctx){
-    // You can use `await` in here
-    let currTime = new Date();
-    ctx.body = currTime;
 });
 
 router.get('/*', async function (ctx){
