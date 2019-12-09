@@ -45,7 +45,7 @@ function getNrOfDaysInDec(){
 
 function getCurrTimeInHungary(){
     let currTime = new Date();
-    let tzOffsetUTC = currTime.getTimezoneOffset();
+    let tzOffsetUTC = -60;
     let tzOffsetInMs = tzOffsetUTC*60*1000;
 
     let currTimeInHungary = new Date(currTime.getTime() - tzOffsetInMs);
