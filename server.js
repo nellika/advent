@@ -38,9 +38,20 @@ function getNrOfDaysInDec(){
     let tzOffsetInMs = tzOffsetUTC*60*1000;
 
     let currTimeInHungary = new Date(currTime.getTime() - tzOffsetInMs);
-    let nrDaysInDec = currTimeInHungary.getUTCDate();
+    let nrDaysInDec = currTimeInHungary.getDate();
 
     return nrDaysInDec;
+}
+
+function getCurrTimeInHungary(){
+    let currTime = new Date();
+    let tzOffsetUTC = currTime.getTimezoneOffset();
+    let tzOffsetInMs = tzOffsetUTC*60*1000;
+
+    let currTimeInHungary = new Date(currTime.getTime() - tzOffsetInMs);
+    let nrDaysInDec = currTimeInHungary.getDate();
+
+    return currTimeInHungary;
 }
 
 // serve files in public folder (css, js etc)
@@ -53,6 +64,12 @@ router.get('/api/words', async function (ctx){
     let resp = words.slice(0,nrOfDays);
 
     ctx.body = resp;
+});
+
+router.get('/api/currTimeInHun', async function (ctx){
+    // You can use `await` in here
+    let currTimeHun = getCurrTimeInHungary();
+    ctx.body = currTimeHun;
 });
 
 router.get('/*', async function (ctx){
