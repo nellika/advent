@@ -72,6 +72,19 @@ router.get('/api/currTimeInHun', async function (ctx){
     ctx.body = currTimeHun;
 });
 
+router.get('/api/tzOffsetUTC', async function (ctx){
+    // You can use `await` in here
+    let currTime = new Date();
+    let tzOffsetUTC = currTime.getTimezoneOffset();
+    ctx.body = tzOffsetUTC;
+});
+
+router.get('/api/currTime', async function (ctx){
+    // You can use `await` in here
+    let currTime = new Date();
+    ctx.body = currTime;
+});
+
 router.get('/*', async function (ctx){
     ctx.body = '<div style="text-align: center;font-size: 20px;">' +
                 '<p style="margin: 2em 0 0 0;font-family: monospace;">Present not found :(</p>'+
