@@ -4,6 +4,7 @@
     --day-box-color: #e7e7be;
     --no-word-grey: #807f80;
     --todays-green: #b5ffc5;
+    --textarea-color: #fff;
 }
 
 body,html,h2,p{
@@ -14,13 +15,6 @@ body,html,h2,p{
 }
 
 body{
-    background-color:#000;
-    background-image: radial-gradient(white, rgba(255,255,255,.2) 5px, transparent 20px),
-                    radial-gradient(white, rgba(255,255,255,.15) 3px, transparent 30px),
-                    radial-gradient(white, rgba(255,255,255,.1) 4px, transparent 15px),
-                    radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 3px, transparent 20px);
-    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
-    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
     height: 100vh;
 }
 
@@ -34,14 +28,139 @@ h1, h2{
     font-weight: normal;
 }
 
+header{
+    padding: 2em 0 0 0;
+    max-width: 35em;
+    margin: 0 auto;
+    position: relative;
+}
+
+textarea::-webkit-input-placeholder {
+  color: var(--textarea-color);
+}
+
+textarea:-moz-placeholder { /* Firefox 18- */
+  color: var(--textarea-color);  
+}
+
+textarea::-moz-placeholder {  /* Firefox 19+ */
+  color: var(--textarea-color);  
+}
+
+textarea:-ms-input-placeholder {
+  color: var(--textarea-color);  
+}
+
+textarea::placeholder {
+  color: var(--textarea-color);  
+}
+
+#cal-title{
+    text-align: center;
+}
+
+#contact-elves{
+    position: absolute;
+    right: 1em;
+    bottom: -2em;
+}
+
+#contact-elves img{
+    width: 4.5em;
+    transform: rotate(20deg);
+    animation: shake 5s cubic-bezier(.12,.89,.94,.69) infinite;
+    cursor: pointer;
+}
+
+#letter-container{
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 1;
+    transition: all 0.3s ease-out;
+    overflow: hidden;
+}
+
+#letter-container.closed{
+    top: -100vh;
+    height: 0;
+}
+
+#msg-status{
+    color: #d19e9e;
+    padding: 1em 0 0 0;
+    font-size: 1.5em;
+    font-family: 'Fredericka the Great', cursive;
+}
+
+#msg-status.no-show{
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+#msg-status.show{
+    opacity: 1;
+    transition: all 0.3s ease-out;
+}
+
+#letter-container #letter-for-me{
+    width: 80%;
+    max-width: 35em;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: rgba(150,62,62,0.5);
+    resize: none;
+    border: 1px solid #940000;
+    padding: 2em;
+    caret-color: var(--textarea-color);
+    color: var(--textarea-color);
+    font-size: 1em;
+    margin-top: 2.5em;
+}
+
+#letter-container #letter-for-me:focus{
+    border: 1px solid #940000;;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+#letter-container #send-letter-button{
+    display: block;
+    width: 15em;
+    height: 3em;
+    margin: 2em auto;
+    background: rgba(0,107,58,0.5);
+    color: var(--textarea-color);
+    border:1px solid #006300;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+#letter-container #send-letter-button:focus{
+    outline: none;
+}
+
+#close-container{
+    max-width: 35em;
+    width: 80%;
+    margin: 0 auto;
+}
+
+#close-container img{
+    width: 3.5em;
+    transform: rotate(5deg);
+    cursor: pointer;
+}
+
 #cal-container{
     max-width: 35em;
     margin: 0 auto;
-    padding: 2em 2em 0 2em;
-}
-
-#cal-container #cal-title{
-    text-align: center;
 }
 
 #adv-cal{
@@ -69,9 +188,12 @@ h1, h2{
     border: 1px solid var(--todays-green);
 }
 
+
 #adv-cal .day-container,
 .day-container .day-header,
-.day-container .word-of-the-day{
+.day-container .word-of-the-day,
+#letter-container #letter-for-me,
+#letter-container #send-letter-button{
     border-radius: 5px;
 }
 
@@ -141,7 +263,6 @@ h1, h2{
     padding: 0em 0 0 27%;
     display: block;
 }
-}
 
 .no-highlight{
     -webkit-touch-callout: none;
@@ -151,4 +272,30 @@ h1, h2{
     -ms-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+}
+
+.snowy-background{
+    background-color: #000;
+    background-image: radial-gradient(white, rgba(255,255,255,.2) 5px, transparent 20px), radial-gradient(white, rgba(255,255,255,.15) 3px, transparent 30px), radial-gradient(white, rgba(255,255,255,.1) 4px, transparent 15px), radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 3px, transparent 20px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+}
+
+@keyframes shake {
+    0%,20%{
+        transform: rotate(20deg);
+    }
+
+    5%{
+        transform: rotate(7deg);
+    }
+
+    10%{
+        transform: rotate(15deg);
+    }
+
+    15%{
+        transform: rotate(8deg);
+    }
+
 }

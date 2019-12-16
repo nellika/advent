@@ -2,7 +2,9 @@
 let Koa     = require('koa'),
     send    = require('koa-send'),
     Router  = require('koa-router'),
-    serve   = require('koa-static');
+    serve   = require('koa-static'),
+    koaBody = require('koa-body'),
+    fs = require('fs');
 
 let app = new Koa();
 let router = new Router();
@@ -32,15 +34,31 @@ let words = ['narancs',
             'szenteste'
                     ];
 
-function getNrOfDaysInDec(){
+function getCurrentHunTime(){
     let currTime = new Date();
     let tzOffsetUTC = -60;
     let tzOffsetInMs = tzOffsetUTC*60*1000;
 
     let currTimeInHungary = new Date(currTime.getTime() - tzOffsetInMs);
+    return currTimeInHungary;
+}
+
+function getNrOfDaysInDec(){
+    let currTimeInHungary = getCurrentHunTime();
     let nrDaysInDec = currTimeInHungary.getDate();
 
     return nrDaysInDec;
+}
+
+function getFileName(){
+    let now = getCurrentHunTime();
+    let day = now.getDate();
+    let hour = now.getHours();
+    let minute = now.getMinutes();
+    let millisec = now.getMilliseconds();
+
+    let fileName = `msg_${day}_${hour}_${minute}_${millisec}.txt`;
+    return fileName;
 }
 
 // serve files in public folder (css, js etc)
@@ -61,13 +79,17 @@ router.get('/*', async function (ctx){
                 '<img src="../decor/not-found.gif" alt="Page not found"></div>';
 });
 
+app.use(koaBody());
+router.post('/api/sendMessage', async function (ctx){
+    ctx.status = 200;
+    ctx.body = `Request Body: ${JSON.stringify(ctx.request.body)}`;
+
+    fs.appendFile('messages/' + getFileName(), ctx.request.body.message, function (err) {
+        if (err) throw err;
+      });
+});
+
 app.use(router.routes());
 app.use(router.allowedMethods());
-
-// this last middleware catches any request that isn't handled by
-// koa-static or koa-router, ie your index.html in your example
-//app.use(function* index() {
-//  yield send(this, __dirname + '/index.html');
-//});
 
 app.listen(process.env.PORT || 5000);

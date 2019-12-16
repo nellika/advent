@@ -9,32 +9,48 @@
     <link rel="stylesheet" href="style.css">
     <script src="vue.min.js"></script>
 </head>
-<body>
-    <main id='cal-container'>
-        <h1 id="cal-title">Adventi kalendárium</h1>
-        <section id="adv-cal">
-            <article @click="toggleOpened" v-for='(word, index) in words' v-bind:class="[index == words.length-1 ? 'word-of-today day-container' : 'day-container']">
-                <h2 class="day-header no-highlight">
-                    <span>{{index + 1}}</span>
-                    <img v-bind:src="getDecorImg(index)" class="decoration">
-                </h2>
-                <p class="word-of-the-day no-highlight"><span>{{word}}</span></p>
-            </article>
-            <article @click="toggleOpened" class="day-container no-word" v-if="words.length != 24">
-                <h2 class="day-header no-highlight">
-                    <span>{{words.length + 1}}</span>
-                </h2>
-                <p class="word-of-the-day no-highlight">
-                    <img id="loading-gif" src="decor/loading.gif" alt="Christmas is loading">
-                </p>
-            </article>
-        </section>
-    </main>
+<body class="snowy-background">
+    <div id="cal-app">
+        <header>
+            <h1 id="cal-title">Adventi kalendárium</h1>
+            <div id="contact-elves">
+                <img @click="toggleWriteLetter" src="decor/card.svg" alt="Write me a letter!">
+            </div>
+        </header>
+        <main id='cal-container'>
+            <section id="adv-cal">
+                <article @click="toggleOpened" v-for='(word, index) in words' v-bind:class="[index == words.length-1 ? 'word-of-today day-container' : 'day-container']">
+                    <h2 class="day-header no-highlight">
+                        <span>{{index + 1}}</span>
+                        <img v-bind:src="getDecorImg(index)" class="decoration">
+                    </h2>
+                    <p class="word-of-the-day no-highlight"><span>{{word}}</span></p>
+                </article>
+                <article @click="toggleOpened" class="day-container no-word" v-if="words.length != 24">
+                    <h2 class="day-header no-highlight">
+                        <span>{{words.length + 1}}</span>
+                    </h2>
+                    <p class="word-of-the-day no-highlight">
+                        <img id="loading-gif" src="decor/loading.gif" alt="Christmas is loading">
+                    </p>
+                </article>
+            </section>
+            <section id="letter-container" v-bind:class="[letterWritingMode ? 'snowy-background' : 'snowy-background closed']">
+                <div id="msg-status" v-bind:class="msgStatus">Message sent. Thank you!</div>
+                <textarea v-model="message" id="letter-for-me" class="no-highlight" cols="30" rows="10" placeholder="Any thoughts, crawling bugs?">                </textarea>
+                <button @click="sendLetter" id="send-letter-button" class="no-highlight">Contact the elves</button>
+                <div id="close-container"><img @click="toggleWriteLetter" src="decor/close.svg" alt="Close letter"></div>
+            </section>
+        </main>
+    </div>
 <script>
     const app = new Vue({
-        el: '#adv-cal',
+        el: '#cal-app',
         data: {
-            words: []
+            words: [],
+            letterWritingMode: false,
+            message: "",
+            msgStatus: "no-show"
         },
         created(){
             fetch('/api/words')
@@ -46,7 +62,7 @@
         methods: {
             toggleOpened: function(e){
                 let elChild;
-                
+
                 if(e.target.tagName.toUpperCase() == 'H2'){
                     elChild = e.path[1];        
                 } else {
@@ -57,6 +73,29 @@
             },
             getDecorImg : function(index) {
                 return `decor/${index%7}.svg`;
+            },
+            toggleWriteLetter:function(){
+                this.letterWritingMode = !this.letterWritingMode;
+            },
+            sendLetter:function(value){
+                if(this.message.length > 3){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", '/api/sendMessage', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify({
+                        message: this.message
+                    }));
+
+                    this.flashStatusMessage();
+                    this.message = "";
+                }else{
+                    this.message = "I cannot send such a short message!";
+                }
+
+            },
+            flashStatusMessage: function(){
+                this.msgStatus="show";
+                setTimeout(() => this.msgStatus="no-show", 2000)
             }
         }
     })
