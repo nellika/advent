@@ -60,7 +60,6 @@ textarea::placeholder {
 }
 
 #contact-elves{
-    display: none;
     position: absolute;
     right: 1em;
     bottom: -2em;
