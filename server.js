@@ -93,12 +93,18 @@ router.post('/api/sendMessage', async function (ctx){
     ctx.status = 200;
     ctx.body = `Request Body: ${JSON.stringify(ctx.request.body)}`;
 
-    let msg = `INSERT INTO messages(message) values(${ctx.request.body.message});`;
+    const text = 'INSERT INTO messages(message) values($1) RETURNING *';
+    let msg = ctx.request.body.message;
+    let values = [msg]
 
-    client.query(msg, (err, res) => {
-        if (err) throw err;
-        client.end();
-      });
+    client.query(text, values, (err, res) => {
+        if (err) {
+          console.log(err.stack)
+        } else {
+          console.log(res.rows[0])
+          // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
+        }
+      })
 });
 
 app.use(router.routes());
