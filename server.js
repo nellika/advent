@@ -4,7 +4,8 @@ let Koa     = require('koa'),
     Router  = require('koa-router'),
     serve   = require('koa-static'),
     koaBody = require('koa-body'),
-    fs = require('fs');
+    fs = require('fs'),
+    { Client } = require('pg');
 
 let app = new Koa();
 let router = new Router();
@@ -33,6 +34,13 @@ let words = ['narancs',
             'csillagszóró',
             'szenteste'
                     ];
+
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+});
+                      
+client.connect();
 
 function getCurrentHunTime(){
     let currTime = new Date();
