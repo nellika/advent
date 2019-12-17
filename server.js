@@ -42,14 +42,6 @@ const client = new Client({
                       
 client.connect();
 
-client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-  if (err) throw err;
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }
-  client.end();
-});
-
 function getCurrentHunTime(){
     let currTime = new Date();
     let tzOffsetUTC = -60;
@@ -96,12 +88,16 @@ router.get('/*', async function (ctx){
 });
 
 app.use(koaBody());
+
 router.post('/api/sendMessage', async function (ctx){
     ctx.status = 200;
     ctx.body = `Request Body: ${JSON.stringify(ctx.request.body)}`;
 
-    fs.appendFile('messages/' + getFileName(), ctx.request.body.message, function (err) {
+    let msg = `INSERT INTO messages(message) values(${ctx.request.body.message});`;
+
+    client.query(msg, (err, res) => {
         if (err) throw err;
+        client.end();
       });
 });
 
