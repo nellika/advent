@@ -1,6 +1,5 @@
 :root{
-    --day-box-height: 6em;
-    /*--day-box-color: #7787a9;*/
+    --day-box-height: 100%;
     --day-box-color: #e7e7be;
     --no-word-grey: #807f80;
     --todays-green: #b5ffc5;
@@ -170,7 +169,7 @@ textarea::placeholder {
 }
 
 #adv-cal .day-container{
-    min-width: var(--day-box-height);
+    min-width: 6em;
     height: var(--day-box-height);
     text-align: center;
     overflow: hidden;
@@ -182,6 +181,7 @@ textarea::placeholder {
 
 #adv-cal .day-container.no-word{
     border: 1px solid var(--no-word-grey);
+    height: 6em;
 }
 
 #adv-cal .day-container.word-of-today{
@@ -206,6 +206,7 @@ textarea::placeholder {
 .day-container .day-header{
     position: absolute;
     top: 0em;
+    opacity: 1;
     transition: all 0.3s ease-out;
     background-color: rgba(255, 255, 255, .08);  
     backdrop-filter: blur(5px);
@@ -222,10 +223,14 @@ textarea::placeholder {
     top:calc(0em - var(--day-box-height));
 }
 
+.day-container.revealed .day-header{
+    opacity: 0;
+}
+
 .day-container p.word-of-the-day{
     color: var(--day-box-color);
     font-family: 'Fredericka the Great', cursive;
-    line-height: 2.7em;
+    line-height: 1.3em;
     font-size: 2.6em;
     transition: all 0.2s ease-in;
 }
@@ -236,16 +241,36 @@ textarea::placeholder {
     transition: all 0.3s ease-out;
 }
 
-.day-container.no-word.opened p.word-of-the-day #loading-gif{
+.day-container.no-word.opened p.word-of-the-day #loading-gif,
+.day-container.no-word.revealed p.word-of-the-day #loading-gif{
     opacity: 1;
 }
 
 .day-container p.word-of-the-day span{
-    padding: 0.3em;
+    display: block;
+    padding: 0.7em 0.3em 0.3em 0.3em;
+}
+
+.noActiveDays .day-container.word-of-today{
+    width: 100%;
+}
+
+.noActiveDays .day-container p.word-of-the-day span{
+    font-size: 0.5em;
+    line-height: 1.5em;
+    font-family: 'Pacifico', cursive;;
+}
+
+.noActiveDays .decoration{
+    display: none;
 }
 
 .day-container.no-word .day-header span{
     color:var(--no-word-grey);
+}
+
+.noActiveDays .word-of-today .day-header span{
+    font-size: 19em;
 }
 
 .day-container.word-of-today .day-header span{

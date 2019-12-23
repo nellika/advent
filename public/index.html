@@ -18,17 +18,17 @@
             </div>
         </header>
         <main id='cal-container'>
-            <section id="adv-cal">
+            <section id="adv-cal" v-bind:class="[nrOfActiveDays > 0 ? 'hasActiveDays':'noActiveDays']">
                 <article @click="toggleOpened" v-for='(word, index) in words' v-bind:class="[index == words.length-1 ? 'word-of-today day-container' : 'day-container']">
                     <h2 class="day-header no-highlight">
-                        <span>{{index + 1}}</span>
+                        <span>{{getIndex(index)}}</span>
                         <img v-bind:src="getDecorImg(index)" class="decoration">
                     </h2>
-                    <p class="word-of-the-day no-highlight"><span>{{word}}</span></p>
+                    <p class="word-of-the-day no-highlight"><span v-html="word"></span></p>
                 </article>
                 <article @click="toggleOpened" class="day-container no-word" v-if="words.length != 24">
                     <h2 class="day-header no-highlight">
-                        <span>{{words.length + 1}}</span>
+                        <span>{{nrOfActiveDays + 1}}</span>
                     </h2>
                     <p class="word-of-the-day no-highlight">
                         <img id="loading-gif" src="decor/loading.gif" alt="Christmas is loading">
@@ -50,26 +50,39 @@
             words: [],
             letterWritingMode: false,
             message: "",
-            msgStatus: "no-show"
+            msgStatus: "no-show",
+            nrOfActiveDays: 0
         },
         created(){
             fetch('/api/words')
                 .then(response => response.json())
                 .then(json => {
-                    this.words = json
+                    this.words = json;
+                    this.nrOfActiveDays = this.words[0].length > 20 ? 0 : this.words.length;                    
                 })
         },
         methods: {
             toggleOpened: function(e){
                 let elChild;
+                let classToToggle = 'opened';
 
                 if(e.target.tagName.toUpperCase() == 'H2'){
                     elChild = e.path[1];        
                 } else {
                     elChild = e.path[2];
                 }
+
+                if(this.nrOfActiveDays==0){
+                    classToToggle = 'revealed'
+                }
                 
-                elChild.classList.toggle('opened'); 
+                elChild.classList.toggle(classToToggle); 
+            },
+            getIndex: function(index){
+                if(this.nrOfActiveDays == 0){
+                    return '*';
+                }                
+                return index + 1;
             },
             getDecorImg : function(index) {
                 return `decor/${index%7}.svg`;

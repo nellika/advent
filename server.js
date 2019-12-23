@@ -34,6 +34,24 @@ let words = ['narancs',
             'csillagszóró',
             'szenteste'
                     ];
+let littleStory = ['Téli ég, Te csillagos!<br>'+
+                   'Holfénytől vagy mámoros.<br>'+
+                   'Karácsonyfán szaloncukor,<br>'+
+                   'Bejgliillat kis konyhánkból.<br>'+
+                   'Narancs is van, meg mogyoró,<br>'+
+                   'Sok meglepetés a fa alól,<br>'+
+                   'Egy valami kéne még,<br>'+
+                   'Egy ici-pici ajándék...<br>'+
+                   'Télapó anno nem hozott,<br>'+
+                   'Most elfeledték angyalok...<br>'+
+                   'Csizmám pedig készen áll,<br>'+
+                   'Hópelyheket nem talál.<br>'+
+                   'Lenne pedig hóember,<br>'+
+                   'Megtömném sok bejglivel.<br>'+
+                   'Szánkózna az egész család,<br>'+
+                   'Mosolygova néznénk fel rád.<br>'+
+                   'Csillagszórónk úgy fénylene,<br>'+
+                   'Mint Holdadnak ezüst éle.']
 
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
@@ -53,8 +71,13 @@ function getCurrentHunTime(){
 
 function getNrOfDaysInDec(){
     let currTimeInHungary = getCurrentHunTime();
-    let nrDaysInDec = currTimeInHungary.getDate();
+    let currMonth = currTimeInHungary.getMonth();
 
+    if (currMonth != 11) {
+        return 0;
+    }
+
+    let nrDaysInDec = currTimeInHungary.getDate();
     return nrDaysInDec;
 }
 
@@ -76,7 +99,7 @@ app.use(serve(__dirname + '/public'));
 router.get('/api/words', async function (ctx){
     // You can use `await` in here
     let nrOfDays = getNrOfDaysInDec();
-    let resp = words.slice(0,nrOfDays);
+    let resp = nrOfDays > 24 ? littleStory.slice(0,1) : words.slice(0,nrOfDays);
 
     ctx.body = resp;
 });
@@ -102,7 +125,6 @@ router.post('/api/sendMessage', async function (ctx){
           console.log(err.stack)
         } else {
           console.log(res.rows[0])
-          // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
         }
       })
 });
