@@ -73,11 +73,13 @@ function getNrOfDaysInDec(){
     let currTimeInHungary = getCurrentHunTime();
     let currMonth = currTimeInHungary.getMonth();
 
-    if (currMonth != 11) {
+    let nrDaysInDec = currTimeInHungary.getDate();
+    
+    // After dec. 26 returns 0
+    if (currMonth != 11 || nrDaysInDec > 26) {
         return 0;
     }
-
-    let nrDaysInDec = currTimeInHungary.getDate();
+    
     return nrDaysInDec;
 }
 
