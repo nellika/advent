@@ -18,6 +18,7 @@
             </div>
         </header>
         <main id='cal-container'>
+			<p>Szia kedves Modafar</p>
             <section id="adv-cal" v-bind:class="[nrOfActiveDays > 0 ? 'hasActiveDays':'noActiveDays']">
                 <article @click="toggleOpened" v-for='(word, index) in words' v-bind:class="[index == words.length-1 ? 'word-of-today day-container' : 'day-container']">
                     <h2 class="day-header no-highlight">
